@@ -1,4 +1,5 @@
 import { Group, Rect, Text } from "react-konva";
+import { ParkingTransaction } from "../types";
 
 interface CreateParkingLayoutProps {
   total: number;
@@ -9,7 +10,7 @@ interface CreateParkingLayoutProps {
   filledColor?: string;
   emptyColor?: string;
   keyItemPrefix: string;
-  dataFills: string[];
+  dataFills: ParkingTransaction[];
   onSelect: Function;
 }
 
@@ -28,12 +29,15 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
   return (
     <>
       {[...new Array(total)].map((_, index) => {
+        const itemNumber: number = index + 1;
         const itemXPoint: number = index * itemWidth + x;
         const itemYPoint: number = y;
         const width: number = itemWidth;
         const height: number = itemHeight;
-        const spotKey: string = `${keyItemPrefix}-${index}`;
-        const isFilledSpot: boolean = dataFills.includes(spotKey);
+        const spotKey: string = `${keyItemPrefix}${itemNumber}`;
+        const isFilledSpot = dataFills.find(
+          (item) => item.parkingSpot === spotKey
+        );
 
         return (
           <Group key={index} x={itemXPoint} y={itemYPoint}>
@@ -46,7 +50,7 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
               fill={isFilledSpot ? filledColor : emptyColor}
               stroke='black'
               strokeWidth={2}
-              onClick={() => onSelect?.(spotKey)}
+              onClick={() => onSelect(spotKey)}
             />
             <Text
               text={String(index + 1)}

@@ -1,0 +1,31 @@
+.modal-container {
+  @apply fixed w-full h-screen top-0 left-0 right-0 bg-slate-700/70 z-50 flex items-center justify-center;
+}
+
+.modal-display {
+  @apply container w-full max-w-lg h-min bg-white rounded p-8;
+}
+
+.modal-header {
+  @apply uppercase font-bold text-primary text-2xl text-center;
+}
+
+.input-form {
+  @apply border-primary/70 border-2 rounded-md py-2 px-3 mb-2 focus:border-primary focus:outline-none;
+}
+
+.select-form {
+  @apply bg-primary rounded-md py-2 px-3 mb-2 text-white focus:border-primary focus:outline-none;
+}
+
+.select-form option {
+  @apply bg-white text-black;
+}
+
+.button-form {
+  @apply bg-primary py-3 mt-5 text-white rounded-md hover:bg-primary/80;
+}
+
+.button-close {
+  @apply bg-white border-primary border-2 text-primary py-3 mt-5 rounded-md box-border hover:opacity-75;
+}

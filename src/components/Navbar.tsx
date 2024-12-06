@@ -8,7 +8,7 @@ const navigations: Menu[] = [];
 const Navbar = () => {
   return (
     <nav className='w-full h-14 bg-dark/80'>
-      <div className='fixed container w-full h-14 top-0 left-0 right-0 m-auto flex items-center justify-between z-50'>
+      <div className='fixed container w-full h-14 top-0 left-0 right-0 m-auto flex items-center justify-between z-40'>
         <span className='font-semibold text-xl'>Parkirin</span>
         {/* <div className='md:hidden text-white cursor-pointer'>
           <IoMdMenu />

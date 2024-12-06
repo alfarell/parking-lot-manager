@@ -1,20 +1,25 @@
 import { useState } from "react";
 import { Stage, Layer, Text } from "react-konva";
 import ParkingLayoutFields from "./ParkingLayoutFields";
+import TransactionForm from "./TransactionForm/TransactionForm";
+import { useParkingLotContext } from "../context/ParkingLotProvider";
 
 const spotWidth: number = 100;
 const spotHeight: number = 150;
 
 const ParkingLot: React.FC = () => {
-  const [parkingSpots, setParkingSpots] = useState<string[]>([]);
+  const { activeSessions } = useParkingLotContext();
+  const [parkingSpots, setParkingSpots] = useState<string>("");
+  const [openModalForm, setOpenModalForm] = useState<boolean>(false);
 
-  const handleSlotClick = (id: string) => {
-    setParkingSpots((prevSpots) => {
-      if (prevSpots.includes(id)) {
-        return prevSpots.filter((item) => item !== id);
-      }
-      return [...prevSpots, id];
-    });
+  const handleSpotClick = (id: string) => {
+    setParkingSpots(id);
+    setOpenModalForm(true);
+  };
+
+  const handleCloseModalForm = () => {
+    setParkingSpots("");
+    setOpenModalForm(false);
   };
 
   return (
@@ -28,9 +33,9 @@ const ParkingLot: React.FC = () => {
             y={50}
             itemWidth={spotWidth}
             itemHeight={spotHeight}
-            dataFills={parkingSpots}
+            dataFills={activeSessions}
             keyItemPrefix='A-'
-            onSelect={handleSlotClick}
+            onSelect={handleSpotClick}
           />
           <ParkingLayoutFields
             total={10}
@@ -38,9 +43,9 @@ const ParkingLot: React.FC = () => {
             y={400}
             itemWidth={spotWidth}
             itemHeight={spotHeight}
-            dataFills={parkingSpots}
+            dataFills={activeSessions}
             keyItemPrefix='B-'
-            onSelect={handleSlotClick}
+            onSelect={handleSpotClick}
           />
           <ParkingLayoutFields
             total={10}
@@ -48,9 +53,9 @@ const ParkingLot: React.FC = () => {
             y={600}
             itemWidth={spotWidth}
             itemHeight={spotHeight}
-            dataFills={parkingSpots}
+            dataFills={activeSessions}
             keyItemPrefix='C-'
-            onSelect={handleSlotClick}
+            onSelect={handleSpotClick}
           />
           <ParkingLayoutFields
             total={10}
@@ -58,12 +63,19 @@ const ParkingLot: React.FC = () => {
             y={950}
             itemWidth={spotWidth}
             itemHeight={spotHeight}
-            dataFills={parkingSpots}
+            dataFills={activeSessions}
             keyItemPrefix='D-'
-            onSelect={handleSlotClick}
+            onSelect={handleSpotClick}
           />
         </Layer>
       </Stage>
+
+      {openModalForm && (
+        <TransactionForm
+          parkingSpot={parkingSpots}
+          onClose={handleCloseModalForm}
+        />
+      )}
     </div>
   );
 };
