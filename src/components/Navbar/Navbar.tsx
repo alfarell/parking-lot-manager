@@ -46,6 +46,7 @@ const Navbar = () => {
               {navigations.map((item) => {
                 return (
                   <NavLink
+                    key={item.id}
                     to={item.path}
                     className={({ isActive }) => {
                       let classList = "navbar-menu-item";
