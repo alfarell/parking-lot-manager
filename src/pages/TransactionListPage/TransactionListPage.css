@@ -1,0 +1,13 @@
+.transaction-page-wrapper {
+  @apply container mx-auto my-5 min-h-screen;
+}
+
+.transaction-page-header {
+  @apply font-bold text-2xl text-primary;
+}
+
+@media screen and (max-width: 767px) {
+  .transaction-page-wrapper {
+    @apply mx-2 box-border;
+  }
+}
