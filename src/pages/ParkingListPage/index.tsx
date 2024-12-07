@@ -1,13 +1,9 @@
 import "./ParkingListPage.css";
 import { useParkingLotContext } from "../../context/ParkingLotProvider";
-import { calculateTimeRemaining } from "../../utils";
+import { calculateTimeRemaining, convertEpochToDate } from "../../utils";
 import { useState } from "react";
 import { Modal } from "../../components";
 import { ParkingTransaction } from "../../types";
-
-const convertEpochToDate = (timeMs: number) => {
-  return new Date(timeMs).toLocaleString();
-};
 
 type SelectedSessionState = ParkingTransaction | null | undefined;
 
