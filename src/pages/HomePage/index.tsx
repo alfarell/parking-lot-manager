@@ -1,4 +1,4 @@
-import { ParkingLot } from "../components";
+import { ParkingLot } from "../../components";
 
 const HomePage = () => {
   return (
