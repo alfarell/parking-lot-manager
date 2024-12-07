@@ -2,5 +2,4 @@ export { default as Navbar } from "./Navbar/Navbar";
 export { default as ParkingLot } from "./ParkingLot/ParkingLot";
 export { default as ParkingLayoutFields } from "./ParkingLayoutFields/ParkingLayoutFields";
 export { default as TransactionForm } from "./TransactionForm/TransactionForm";
-export { default as ParkingSessionCard } from "./ParkingSessionCard/ParkingSessionCard";
 export { default as Modal } from "./Modal/Modal";

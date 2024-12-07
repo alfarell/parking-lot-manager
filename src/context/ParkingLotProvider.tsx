@@ -5,12 +5,14 @@ interface ParkingLotContextType {
   transactions: ParkingTransaction[];
   activeSessions: ParkingTransaction[];
   handleAddNewTransaction: Function;
+  handleEndParkingSession: Function;
 }
 
 export const ParkingLotContext = createContext<ParkingLotContextType>({
   transactions: [],
   activeSessions: [],
   handleAddNewTransaction: () => {},
+  handleEndParkingSession: () => {},
 });
 
 export const useParkingLotContext = () => useContext(ParkingLotContext);
@@ -44,12 +46,39 @@ const ParkingLotProvider: React.FC<PropsWithChildren> = ({ children }) => {
     localStorage.setItem("saved-sessions", JSON.stringify(addSession));
   };
 
+  const handleRemoveActiveSession = (id: string): void => {
+    const findSession = activeSessions.findIndex((item) => item.id === id);
+    const removeSessions = activeSessions;
+    removeSessions.splice(findSession, 1);
+
+    setActiveSessions(removeSessions);
+    localStorage.setItem("saved-sessions", JSON.stringify(removeSessions));
+  };
+
+  const handleUpdateTransaction = (id: string): void => {
+    const findTransactoin = transactions.findIndex((item) => item.id === id);
+    const updateTransactions = transactions;
+    updateTransactions[findTransactoin].closedAt = Date.now();
+
+    setTransactions(updateTransactions);
+    localStorage.setItem(
+      "saved-transactions",
+      JSON.stringify(updateTransactions)
+    );
+  };
+
+  const handleEndParkingSession = (id: string) => {
+    handleRemoveActiveSession(id);
+    handleUpdateTransaction(id);
+  };
+
   return (
     <ParkingLotContext.Provider
       value={{
         transactions,
         activeSessions,
         handleAddNewTransaction,
+        handleEndParkingSession,
       }}
     >
       {children}
