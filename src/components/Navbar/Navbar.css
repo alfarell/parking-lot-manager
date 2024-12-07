@@ -1,0 +1,49 @@
+.base-navbar {
+  @apply w-full h-14;
+}
+
+.navbar-fixed-wrapper {
+  @apply fixed w-full h-14 top-0 left-0 right-0 bg-white z-40 shadow-md;
+}
+
+.navbar-container {
+  @apply container w-full h-full m-auto flex items-center justify-between;
+}
+
+.navbar-title {
+  @apply font-semibold text-xl text-primary;
+}
+
+.navbar-menu-button {
+  @apply md:hidden p-2 text-primary text-lg border-primary border-2 rounded cursor-pointer;
+}
+
+.navbar-menu-list {
+  @apply flex items-center gap-8 text-black;
+}
+
+.navbar-menu-item {
+  @apply cursor-pointer py-1 px-2 rounded hover:bg-primary/75 hover:shadow-lg hover:text-white;
+}
+
+.menu-active {
+  @apply bg-primary text-white;
+}
+
+@media screen and (max-width: 767px) {
+  .navbar-container {
+    @apply px-2;
+  }
+  .navbar-menu {
+    @apply hidden top-16 right-4 bg-gray-300 rounded w-[80vw] max-w-80 shadow-xl;
+  }
+  .navbar-menu[data-show="true"] {
+    @apply fixed block;
+  }
+  .navbar-menu-list {
+    @apply flex-col gap-2 p-2;
+  }
+  .navbar-menu-item {
+    @apply w-full;
+  }
+}
