@@ -1,5 +1,5 @@
 import { Group, Rect, Text } from "react-konva";
-import { ParkingTransaction } from "../types";
+import { ParkingTransaction } from "../../types";
 
 interface CreateParkingLayoutProps {
   total: number;

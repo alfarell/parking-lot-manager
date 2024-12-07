@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Stage, Layer, Text } from "react-konva";
-import ParkingLayoutFields from "./ParkingLayoutFields";
-import TransactionForm from "./TransactionForm/TransactionForm";
-import { useParkingLotContext } from "../context/ParkingLotProvider";
+import ParkingLayoutFields from "../ParkingLayoutFields/ParkingLayoutFields";
+import TransactionForm from "../TransactionForm/TransactionForm";
+import { useParkingLotContext } from "../../context/ParkingLotProvider";
 
 const spotWidth: number = 100;
 const spotHeight: number = 150;
