@@ -29,28 +29,3 @@ body {
     text-wrap: balance;
   }
 }
-
-.projects-bg-decoration {
-  @apply w-min h-full -z-10 absolute -left-80 top-0 rotate-180;
-}
-
-@media screen and (max-width: 1100px) {
-  .projects-bg-decoration {
-    @apply h-full max-h-[800px] left-0 right-0 top-0;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .nav-menu {
-    @apply hidden top-16 right-4 rounded w-[80vw] max-w-80;
-  }
-  .nav-menu[data-show="true"] {
-    @apply fixed block;
-  }
-  .nav-menu > ul {
-    @apply flex-col gap-2;
-  }
-  .nav-menu > ul > li {
-    @apply py-4;
-  }
-}
