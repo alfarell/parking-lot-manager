@@ -1,0 +1,11 @@
+.modal-container {
+  @apply fixed w-full h-screen top-0 left-0 right-0 bg-slate-700/70 z-50 flex items-center justify-center;
+}
+
+.modal-display {
+  @apply container w-full max-w-lg h-min bg-white rounded p-8;
+}
+
+.modal-header {
+  @apply uppercase font-bold text-primary text-2xl text-center;
+}

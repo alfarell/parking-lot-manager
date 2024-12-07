@@ -2,6 +2,7 @@ import { FormEventHandler, useState } from "react";
 import "./TransactionForm.css";
 import { useParkingLotContext } from "../../context/ParkingLotProvider";
 import { ParkingTransaction } from "../../types";
+import Modal from "../Modal/Modal";
 
 interface TransactionFormProps {
   parkingSpot: string;
@@ -37,13 +38,17 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
 
     const durationInMs =
       Number(durationInput.value) * durationMultiplier[durationType.value];
+    const generateId =
+      Date.now().toString(36) + Math.random().toString(36).substring(2);
     const data: ParkingTransaction = {
-      parkingSpot,
+      id: generateId,
       name: nameInput.value,
       licence: licenceInput.value,
+      parkingSpot,
       duration: Number(durationInput.value),
       durationMs: durationInMs,
       durationType: durationType.value,
+      createdAt: Date.now(),
     };
 
     handleAddNewTransaction(data);
@@ -56,86 +61,84 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   };
 
   return (
-    <div className='modal-container'>
-      <div className='modal-display'>
-        {success ? (
-          <>
-            <h2 className='modal-header'>Transaksi berhasil dibuat</h2>
-            <div></div>
-            <button className='button-form' onClick={handleCloseModal}>
-              Tutup
-            </button>
-          </>
-        ) : (
-          <>
-            <h2 className='modal-header'>Pesan tempat parkir</h2>
-            <div className='my-2 flex items-center text-lg'>
-              Isi form pemesanan tempat parkir untuk Spot :{" "}
-              <span className='bg-primary px-2 ml-2 text-white rounded'>
-                {parkingSpot}
-              </span>
-            </div>
-            <form className='flex flex-col' onSubmit={handleSubmit}>
-              <label className='text-gray-700' htmlFor='name'>
-                Nama
-              </label>
+    <Modal
+      title={success ? "Transaksi berhasil dibuat" : "Pesan tempat parkir"}
+    >
+      {success ? (
+        <>
+          <div></div>
+          <button className='button-form' onClick={handleCloseModal}>
+            Tutup
+          </button>
+        </>
+      ) : (
+        <>
+          <div className='my-2 flex items-center text-lg'>
+            Isi form pemesanan tempat parkir untuk Spot :{" "}
+            <span className='bg-primary px-2 ml-2 text-white rounded'>
+              {parkingSpot}
+            </span>
+          </div>
+          <form className='flex flex-col' onSubmit={handleSubmit}>
+            <label className='text-gray-700' htmlFor='name'>
+              Nama
+            </label>
+            <input
+              id='name'
+              name='name'
+              title='Nama'
+              type='text'
+              placeholder='Masukkan nama pelanggan'
+              className='input-form'
+            />
+            <label className='text-gray-700' htmlFor='licence'>
+              Plat nomor
+            </label>
+            <input
+              id='licence'
+              name='licence'
+              title='Plat nomor'
+              type='text'
+              placeholder='Masukkan plat nomor pelanggan'
+              className='input-form'
+            />
+            <label className='text-gray-700' htmlFor='duration'>
+              Durasi
+            </label>
+            <div className='flex'>
               <input
-                id='name'
-                name='name'
-                title='Nama'
-                type='text'
-                placeholder='Masukkan nama pelanggan'
-                className='input-form'
+                id='duration'
+                name='duration'
+                title='Durasi'
+                type='number'
+                min={0}
+                placeholder='Masukkan durasi parkir'
+                className='input-form w-full'
               />
-              <label className='text-gray-700' htmlFor='licence'>
-                Plat nomor
-              </label>
-              <input
-                id='licence'
-                name='licence'
-                title='Plat nomor'
-                type='text'
-                placeholder='Masukkan plat nomor pelanggan'
-                className='input-form'
-              />
-              <label className='text-gray-700' htmlFor='duration'>
-                Durasi
-              </label>
-              <div className='flex'>
-                <input
-                  id='duration'
-                  name='duration'
-                  title='Durasi'
-                  type='number'
-                  min={0}
-                  placeholder='Masukkan durasi parkir'
-                  className='input-form w-full'
-                />
-                <select
-                  id='duration-type'
-                  name='duration-type'
-                  className='select-form'
-                >
-                  <option value='minutes'>Menit</option>
-                  <option value='hours'>Jam</option>
-                  <option value='days'>Hari</option>
-                </select>
-              </div>
-              <button type='submit' className='button-form'>
-                Buat pesanan
-              </button>
-              <button
-                type='button'
-                className='button-close'
-                onClick={() => onClose()}
+              <select
+                id='duration-type'
+                name='duration-type'
+                className='select-form'
               >
-                Batal
-              </button>
-            </form>
-          </>
-        )}
-      </div>
-    </div>
+                <option value='minutes'>Menit</option>
+                <option value='hours'>Jam</option>
+                <option value='days'>Hari</option>
+              </select>
+            </div>
+            <button type='submit' className='button-form-submit'>
+              Buat pesanan
+            </button>
+            <button
+              type='button'
+              className='button-form-close'
+              onClick={() => onClose()}
+            >
+              Batal
+            </button>
+          </form>
+        </>
+      )}
+    </Modal>
   );
 };
 
