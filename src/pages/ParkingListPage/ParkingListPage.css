@@ -32,6 +32,6 @@
 
 @media screen and (max-width: 767px) {
   .parking-list-page-wrapper {
-    @apply mx-2 box-border;
+    @apply px-2 box-border;
   }
 }

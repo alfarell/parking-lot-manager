@@ -8,6 +8,6 @@
 
 @media screen and (max-width: 767px) {
   .transaction-page-wrapper {
-    @apply mx-2 box-border;
+    @apply px-2 box-border;
   }
 }
