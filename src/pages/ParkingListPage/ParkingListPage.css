@@ -6,39 +6,6 @@
   @apply font-bold text-2xl text-primary;
 }
 
-.parking-table-container {
-  @apply mt-5 rounded-sm shadow-lg overflow-x-auto;
-}
-
-.parking-table {
-  @apply w-full text-sm text-left rtl:text-right;
-}
-
-.parking-table-head {
-  @apply bg-primary text-white uppercase border-b;
-}
-
-.parking-table-head tr th,
-.parking-table-item td {
-  @apply p-3 whitespace-nowrap;
-}
-
-.parking-table-item {
-  @apply border-b hover:bg-primary/20 focus:bg-primary/20;
-}
-
-.parking-table-item td[data-time-exceeded="true"] {
-  @apply text-red-500 font-bold;
-}
-
-.parking-table-item td[data-time-exceeded="false"] {
-  @apply text-green-500;
-}
-
-.parking-table-nodata {
-  @apply flex items-center justify-center min-h-20 w-full;
-}
-
 .parking-end-session {
   @apply px-4 py-2 bg-primary rounded text-white shadow-lg hover:shadow-xl hover:bg-primary/85;
 }

@@ -42,9 +42,9 @@ const ParkingListPage = () => {
   return (
     <div className='parking-list-page-wrapper'>
       <h1 className='parking-page-header'>Daftar Sesi Parkir Aktif</h1>
-      <div className='parking-table-container'>
-        <table className='parking-table'>
-          <thead className='parking-table-head'>
+      <div className='table-wrapper'>
+        <table className='table-container'>
+          <thead className='table-head'>
             <tr>
               <th>No</th>
               <th>Nama</th>
@@ -69,7 +69,7 @@ const ParkingListPage = () => {
                 const formatTimeDuration = `${activeSession.duration} ${activeSession.durationType}`;
 
                 return (
-                  <tr key={index} className='parking-table-item'>
+                  <tr key={index} className='table-item'>
                     <td>{index + 1}</td>
                     <td>{activeSession.name}</td>
                     <td>{activeSession.licence}</td>
@@ -92,7 +92,7 @@ const ParkingListPage = () => {
           )}
         </table>
         {!activeSessions?.length && (
-          <div className='parking-table-nodata'>Tidak ada sesi aktif</div>
+          <div className='table-nodata'>Tidak ada sesi aktif</div>
         )}
       </div>
 

@@ -1,0 +1,32 @@
+.table-wrapper {
+  @apply mt-5 rounded-sm shadow-lg overflow-x-auto;
+}
+
+.table-container {
+  @apply w-full text-sm text-left rtl:text-right;
+}
+
+.table-head {
+  @apply bg-primary text-white uppercase border-b;
+}
+
+.table-head tr th,
+.table-item td {
+  @apply p-3 whitespace-nowrap;
+}
+
+.table-item {
+  @apply border-b hover:bg-primary/20 focus:bg-primary/20;
+}
+
+.table-item td[data-time-exceeded="true"] {
+  @apply text-red-500 font-bold;
+}
+
+.table-item td[data-time-exceeded="false"] {
+  @apply text-green-500;
+}
+
+.table-nodata {
+  @apply flex items-center justify-center min-h-20 w-full;
+}

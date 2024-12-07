@@ -1,5 +1,5 @@
+import "./styles/table.css";
 import { BrowserRouter, Route, Routes } from "react-router";
-import "./App.css";
 import ParkingLotProvider from "./context/ParkingLotProvider";
 import { HomePage, ParkingListPage, TransactionListPage } from "./pages";
 import { Navbar } from "./components";
