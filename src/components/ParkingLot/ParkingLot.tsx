@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Stage, Layer, Text } from "react-konva";
 import Konva from "konva";
 import ParkingLayoutFields from "../ParkingLayoutFields/ParkingLayoutFields";
@@ -14,6 +14,9 @@ interface ParkingLotProps {
 const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
   const { activeSessions } = useParkingLotContext();
 
+  const [isPortrait, setIsPortrait] = useState(
+    window.innerHeight > window.innerWidth
+  );
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const stageRef = useRef(null);
@@ -56,6 +59,41 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
     setPosition(newPos);
   };
 
+  const updateOrientation = () => {
+    const isWindowPortrait = window.innerHeight > window.innerWidth;
+    setIsPortrait(isWindowPortrait);
+
+    if (!isWindowPortrait) {
+      const windowWidth = window.innerWidth;
+      const calculateXPos = windowWidth / 2 - windowWidth / 3;
+      const updateXPos = windowWidth > 1000 ? calculateXPos : 20;
+
+      setPosition({
+        x: updateXPos,
+        y: 20,
+      });
+    }
+  };
+
+  useEffect(() => {
+    updateOrientation();
+    window.addEventListener("resize", updateOrientation);
+
+    return () => {
+      window.removeEventListener("resize", updateOrientation);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isPortrait) {
+      setScale(0.5);
+      setPosition({
+        x: 20,
+        y: 20,
+      });
+    }
+  }, [isPortrait]);
+
   return (
     <div className='overflow-hidden'>
       <Stage
@@ -73,7 +111,7 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
         ref={stageRef}
       >
         <Layer>
-          <Text text='Denah Parkir' x={20} y={0} fontSize={24} fill='black' />
+          <Text text='Denah Parkir' x={0} y={0} fontSize={24} fill='black' />
           <ParkingLayoutFields
             total={10}
             x={0}
