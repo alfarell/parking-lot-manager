@@ -13,8 +13,8 @@ const baseMaxScreenWidth: number = 2000;
 const baseMinScreenWidth: number = 700;
 const baseScaler: number = 1;
 // const basePortraitScaler: number = 0.3;
-// const maxScale: number = 3;
-// const minScale: number = 0.8;
+const maxScale: number = 3;
+const minScale: number = 0.8;
 
 interface ParkingLotProps {
   onItemSelect: Function;
@@ -54,6 +54,8 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
         x: pointer.x - mousePointTo.x * newScale,
         y: pointer.y - mousePointTo.y * newScale,
       };
+
+      if (newScale >= maxScale || newScale <= minScale) return;
 
       setScale(newScale);
       setPosition(newPos);
