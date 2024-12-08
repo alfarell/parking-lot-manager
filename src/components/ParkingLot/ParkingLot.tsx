@@ -59,7 +59,7 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
   return (
     <div className='overflow-hidden'>
       <Stage
-        className='bg-gray-500'
+        className='bg-gray-400'
         width={window.innerWidth}
         height={window.innerHeight}
         draggable

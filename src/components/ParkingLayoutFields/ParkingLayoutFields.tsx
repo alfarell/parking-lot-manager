@@ -1,5 +1,8 @@
-import { Group, Rect, Text } from "react-konva";
+import { Group, Image, Rect, Text } from "react-konva";
+import useImage from "use-image";
 import { ParkingTransaction } from "../../types";
+
+import CarIcon from "../../assets/car-svgrepo-com.svg";
 
 interface CreateParkingLayoutProps {
   total: number;
@@ -22,12 +25,13 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
   rotateCenter,
   itemWidth,
   itemHeight,
-  filledColor = "red",
-  emptyColor = "green",
+  filledColor = "#dc2626",
+  emptyColor = "#16a34a",
   keyItemPrefix,
   dataFills,
   onSelect,
 }) => {
+  const [carIcon] = useImage(CarIcon);
   const defineX = () => {
     if (rotateCenter) {
       const totalWidth = total * itemWidth + x;
@@ -73,10 +77,19 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
               onClick={() => onSelect(spotKey)}
               onTouchEnd={() => onSelect(spotKey)}
             />
+            {isFilledSpot && (
+              <Image
+                image={carIcon}
+                x={width / 2 - 25}
+                y={height / 2 - 25}
+                width={50}
+                height={50}
+              />
+            )}
             <Text
               text={String(index + 1)}
               x={width / 2 - 12}
-              y={height / 2 - 12}
+              y={height - 34}
               fontSize={24}
               fill='black'
             />
