@@ -66,10 +66,12 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
     >
       {success ? (
         <>
-          <div></div>
-          <button className='button-form' onClick={handleCloseModal}>
-            Tutup
-          </button>
+          <div className='success-content'></div>
+          <div className='flex justify-center'>
+            <button className='button-form-close' onClick={handleCloseModal}>
+              Tutup
+            </button>
+          </div>
         </>
       ) : (
         <>
