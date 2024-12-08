@@ -50,6 +50,7 @@ const Navbar = () => {
                   <NavLink
                     key={item.id}
                     to={item.path}
+                    onClick={() => setShowMenu(false)}
                     className={({ isActive }) => {
                       let classList = "navbar-menu-item";
                       if (isActive) classList += " menu-active";
