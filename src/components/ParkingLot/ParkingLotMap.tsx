@@ -8,6 +8,7 @@ import {
   totalSpot,
   totalSpotWidth,
 } from "../../const/parking-lot-const";
+import React from "react";
 
 const labelXPos = spotWidth * totalSpot + 20;
 const labelSize = 50;
@@ -57,9 +58,9 @@ const ParkingLotMap = () => {
         fill='black'
       />
 
-      {layoutFieldsData.map((field) => {
+      {layoutFieldsData.map((field, index) => {
         return (
-          <>
+          <React.Fragment key={index}>
             <Text
               text={field.label}
               x={labelXPos}
@@ -78,7 +79,7 @@ const ParkingLotMap = () => {
               keyItemPrefix={field.label}
               onSelect={handleSpotClick}
             />
-          </>
+          </React.Fragment>
         );
       })}
     </Layer>
