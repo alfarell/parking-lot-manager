@@ -71,6 +71,7 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
               stroke='black'
               strokeWidth={2}
               onClick={() => onSelect(spotKey)}
+              onTouchEnd={() => onSelect(spotKey)}
             />
             <Text
               text={String(index + 1)}
