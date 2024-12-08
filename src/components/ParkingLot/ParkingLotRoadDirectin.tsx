@@ -28,7 +28,7 @@ const ParkingLotRoadDirectin: React.FC<ParkingLotRoadDirectinProps> = () => {
         strokeWidth={10}
       />
       <Arrow
-        x={totalSpotWidth + 200}
+        x={totalSpotWidth + 300}
         y={480}
         rotation={90}
         points={[0, 100, 200, 100]}
