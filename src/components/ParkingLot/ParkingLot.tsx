@@ -1,13 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Stage, Layer, Text, Arrow } from "react-konva";
+import { Stage } from "react-konva";
 import Konva from "konva";
-import ParkingLayoutFields from "../ParkingLayoutFields/ParkingLayoutFields";
-import { useParkingLotContext } from "../../context/ParkingLotProvider";
-
-const totalSpot: number = 10;
-const spotWidth: number = 100;
-const spotHeight: number = 150;
-const totalSpotWidth: number = totalSpot * spotWidth;
+import ParkingLotRoadDirectin from "./ParkingLotRoadDirectin";
+import ParkingLotMap from "./ParkingLotMap";
+import { spotWidth, totalSpot } from "../../const/parking-lot-const";
 
 const baseMaxScreenWidth: number = 2000;
 const baseMinScreenWidth: number = 700;
@@ -20,23 +16,15 @@ interface PositionState {
   x: number;
   y: number;
 }
-interface ParkingLotProps {
-  onItemSelect: Function;
-}
+interface ParkingLotProps {}
 
-const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
-  const { activeSessions } = useParkingLotContext();
-
+const ParkingLot: React.FC<ParkingLotProps> = () => {
   const [scale, setScale] = useState<number>(1);
   const [position, setPosition] = useState<PositionState>({
     x: 0,
     y: 0,
   });
   const stageRef = useRef<Konva.Stage>(null);
-
-  const handleSpotClick = (id: string) => {
-    onItemSelect(id);
-  };
 
   const handleWheel = (e: Konva.KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
@@ -120,115 +108,8 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
         onWheel={handleWheel}
         ref={stageRef}
       >
-        <Layer>
-          <Text
-            text='Denah Parkir'
-            x={totalSpotWidth / 2 - 70}
-            y={0}
-            fontSize={24}
-            fill='black'
-          />
-          <ParkingLayoutFields
-            total={10}
-            x={0}
-            y={50}
-            itemWidth={spotWidth}
-            itemHeight={spotHeight}
-            dataFills={activeSessions}
-            keyItemPrefix='A-'
-            onSelect={handleSpotClick}
-          />
-          <ParkingLayoutFields
-            total={10}
-            x={0}
-            y={400}
-            rotateCenter={180}
-            itemWidth={spotWidth}
-            itemHeight={spotHeight}
-            dataFills={activeSessions}
-            keyItemPrefix='B-'
-            onSelect={handleSpotClick}
-          />
-          <ParkingLayoutFields
-            total={10}
-            x={0}
-            y={600}
-            itemWidth={spotWidth}
-            itemHeight={spotHeight}
-            dataFills={activeSessions}
-            keyItemPrefix='C-'
-            onSelect={handleSpotClick}
-          />
-          <ParkingLayoutFields
-            total={10}
-            x={0}
-            y={950}
-            rotateCenter={180}
-            itemWidth={spotWidth}
-            itemHeight={spotHeight}
-            dataFills={activeSessions}
-            keyItemPrefix='D-'
-            onSelect={handleSpotClick}
-          />
-        </Layer>
-        <Layer>
-          <Text x={-130} y={10} text='Masuk' fontSize={20} fill='black' />
-          <Arrow
-            x={0}
-            y={50}
-            rotation={90}
-            points={[0, 100, 150, 100]}
-            pointerLength={15}
-            pointerWidth={20}
-            fill='black'
-            stroke='black'
-            strokeWidth={10}
-          />
-          <Arrow
-            x={totalSpotWidth / 2 - 100}
-            y={200}
-            points={[0, 100, 200, 100]}
-            pointerLength={15}
-            pointerWidth={20}
-            fill='black'
-            stroke='black'
-            strokeWidth={10}
-          />
-          <Arrow
-            x={totalSpotWidth + 200}
-            y={480}
-            rotation={90}
-            points={[0, 100, 200, 100]}
-            pointerLength={15}
-            pointerWidth={20}
-            fill='black'
-            stroke='black'
-            strokeWidth={10}
-          />
-          <Arrow
-            x={totalSpotWidth / 2 + 100}
-            y={950}
-            rotation={180}
-            points={[0, 100, 200, 100]}
-            pointerLength={15}
-            pointerWidth={20}
-            fill='black'
-            stroke='black'
-            strokeWidth={10}
-          />
-          <Arrow
-            x={0}
-            y={950}
-            rotation={90}
-            points={[0, 100, 150, 100]}
-            pointerLength={15}
-            pointerWidth={20}
-            fill='black'
-            stroke='black'
-            strokeWidth={10}
-          />
-          <Text x={-130} y={1130} text='Keluar' fontSize={20} fill='black' />
-        </Layer>
+        <ParkingLotMap />
+        <ParkingLotRoadDirectin />
       </Stage>
     </div>
   );
