@@ -16,6 +16,10 @@ const baseScaler: number = 1;
 const maxScale: number = 3;
 const minScale: number = 0.8;
 
+interface PositionState {
+  x: number;
+  y: number;
+}
 interface ParkingLotProps {
   onItemSelect: Function;
 }
@@ -23,9 +27,12 @@ interface ParkingLotProps {
 const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
   const { activeSessions } = useParkingLotContext();
 
-  const [scale, setScale] = useState(1);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const stageRef = useRef(null);
+  const [scale, setScale] = useState<number>(1);
+  const [position, setPosition] = useState<PositionState>({
+    x: 0,
+    y: 0,
+  });
+  const stageRef = useRef<Konva.Stage>(null);
 
   const handleSpotClick = (id: string) => {
     onItemSelect(id);
@@ -33,42 +40,42 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
 
   const handleWheel = (e: Konva.KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
-    const stage: any = stageRef.current;
+    const stage = stageRef.current;
 
-    if (stage) {
-      const oldScale = stage.scaleX();
-      const pointer = stage.getPointerPosition();
+    if (!stage) return;
 
-      // Zoom factor
-      const scaleBy = 1.1;
-      const newScale =
-        e.evt.deltaY > 0 ? oldScale / scaleBy : oldScale * scaleBy;
+    const oldScale = stage.scaleX();
+    const pointer = stage.getPointerPosition();
 
-      // Update position and scale
-      const mousePointTo = {
-        x: (pointer.x - stage.x()) / oldScale,
-        y: (pointer.y - stage.y()) / oldScale,
-      };
+    if (!pointer || !oldScale) return;
 
-      const newPos = {
-        x: pointer.x - mousePointTo.x * newScale,
-        y: pointer.y - mousePointTo.y * newScale,
-      };
+    // Zoom factor
+    const scaleBy = 1.1;
+    const newScale = e.evt.deltaY > 0 ? oldScale / scaleBy : oldScale * scaleBy;
 
-      if (newScale >= maxScale || newScale <= minScale) return;
+    if (newScale >= maxScale || newScale <= minScale) return;
 
-      setScale(newScale);
-      setPosition(newPos);
-    }
+    // Update position and scale
+    const mousePointTo = {
+      x: (pointer.x - stage.x()) / oldScale,
+      y: (pointer.y - stage.y()) / oldScale,
+    };
+    const newPos = {
+      x: pointer.x - mousePointTo.x * newScale,
+      y: pointer.y - mousePointTo.y * newScale,
+    };
+
+    setScale(newScale);
+    setPosition(newPos);
   };
 
-  const handleDragMove = (e: any) => {
+  const handleDragMove = (e: Konva.KonvaEventObject<DragEvent>) => {
     const newPos = { x: e.target.x(), y: e.target.y() };
     setPosition(newPos);
   };
 
   const updateOrientation = () => {
-    const minimumScreen =
+    const minimumScreen: number =
       window.innerWidth > baseMinScreenWidth
         ? window.innerWidth
         : baseMinScreenWidth;

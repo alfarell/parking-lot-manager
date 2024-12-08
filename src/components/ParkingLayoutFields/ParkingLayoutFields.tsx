@@ -1,10 +1,11 @@
+import { useState } from "react";
+import Konva from "konva";
+import { KonvaEventObject } from "konva/lib/Node";
 import { Group, Image, Rect, Text } from "react-konva";
 import useImage from "use-image";
 import { ParkingTransaction } from "../../types";
 
 import CarIcon from "../../assets/car-svgrepo-com.svg";
-import { KonvaEventObject } from "konva/lib/Node";
-import { useState } from "react";
 
 interface CreateParkingLayoutProps {
   total: number;
@@ -18,6 +19,10 @@ interface CreateParkingLayoutProps {
   keyItemPrefix: string;
   dataFills: ParkingTransaction[];
   onSelect: Function;
+}
+interface TouchPositionState {
+  x: number;
+  y: number;
 }
 
 const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
@@ -35,17 +40,18 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
 }) => {
   const [carIcon] = useImage(CarIcon);
 
-  const [touchStartPosition, setTouchStartPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
+  const [touchStartPosition, setTouchStartPosition] =
+    useState<TouchPositionState>({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const threshold = 2;
 
-  const handleTouchStart = (e: any) => {
+  const handleTouchStart = (e: Konva.KonvaEventObject<TouchEvent>) => {
     const touch = e.evt.touches[0];
     setTouchStartPosition({ x: touch.clientX, y: touch.clientY });
     setIsDragging(false);
   };
 
-  const handleTouchMove = (e: any) => {
+  const handleTouchMove = (e: Konva.KonvaEventObject<TouchEvent>) => {
     const touch = e.evt.touches[0];
     const dx = touch.clientX - touchStartPosition.x;
     const dy = touch.clientY - touchStartPosition.y;
@@ -55,7 +61,10 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
     }
   };
 
-  const handleTouchEnd = (e: any, spotKey: string) => {
+  const handleTouchEnd = (
+    e: Konva.KonvaEventObject<TouchEvent>,
+    spotKey: string
+  ) => {
     if (!isDragging) {
       onSelect(spotKey);
     }
