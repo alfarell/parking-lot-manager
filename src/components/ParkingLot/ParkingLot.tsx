@@ -4,8 +4,17 @@ import Konva from "konva";
 import ParkingLayoutFields from "../ParkingLayoutFields/ParkingLayoutFields";
 import { useParkingLotContext } from "../../context/ParkingLotProvider";
 
+const totalSpot: number = 10;
 const spotWidth: number = 100;
 const spotHeight: number = 150;
+const totalSpotWidth: number = totalSpot * spotWidth;
+
+const baseMaxScreenWidth: number = 2000;
+const baseMinScreenWidth: number = 700;
+const baseScaler: number = 1;
+// const basePortraitScaler: number = 0.3;
+// const maxScale: number = 3;
+// const minScale: number = 0.8;
 
 interface ParkingLotProps {
   onItemSelect: Function;
@@ -14,9 +23,6 @@ interface ParkingLotProps {
 const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
   const { activeSessions } = useParkingLotContext();
 
-  const [isPortrait, setIsPortrait] = useState(
-    window.innerHeight > window.innerWidth
-  );
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const stageRef = useRef(null);
@@ -60,19 +66,25 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
   };
 
   const updateOrientation = () => {
-    const isWindowPortrait = window.innerHeight > window.innerWidth;
-    setIsPortrait(isWindowPortrait);
+    const minimumScreen =
+      window.innerWidth > baseMinScreenWidth
+        ? window.innerWidth
+        : baseMinScreenWidth;
+    const scaler: number =
+      window.innerWidth > baseMaxScreenWidth
+        ? baseScaler
+        : minimumScreen / baseMaxScreenWidth;
 
-    if (!isWindowPortrait) {
-      const windowWidth = window.innerWidth;
-      const calculateXPos = windowWidth / 2 - windowWidth / 3;
-      const updateXPos = windowWidth > 1000 ? calculateXPos : 20;
+    const halfOfScren: number = window.innerWidth / 2;
+    const halfOfContent: number = ((totalSpot * spotWidth) / 2) * scaler;
 
-      setPosition({
-        x: updateXPos,
-        y: 20,
-      });
-    }
+    // set stage to center
+    const updateCenter: number = halfOfScren - halfOfContent;
+    setPosition({
+      x: updateCenter,
+      y: 50,
+    });
+    setScale(scaler);
   };
 
   useEffect(() => {
@@ -83,16 +95,6 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
       window.removeEventListener("resize", updateOrientation);
     };
   }, []);
-
-  useEffect(() => {
-    if (isPortrait) {
-      setScale(0.5);
-      setPosition({
-        x: 20,
-        y: 20,
-      });
-    }
-  }, [isPortrait]);
 
   return (
     <div className='overflow-hidden'>
@@ -111,7 +113,13 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
         ref={stageRef}
       >
         <Layer>
-          <Text text='Denah Parkir' x={0} y={0} fontSize={24} fill='black' />
+          <Text
+            text='Denah Parkir'
+            x={totalSpotWidth / 2 - 70}
+            y={0}
+            fontSize={24}
+            fill='black'
+          />
           <ParkingLayoutFields
             total={10}
             x={0}
