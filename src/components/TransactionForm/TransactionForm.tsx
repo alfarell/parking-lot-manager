@@ -75,9 +75,11 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
         </>
       ) : (
         <>
-          <div className='my-2 flex items-center text-lg'>
-            Isi form pemesanan tempat parkir untuk Spot :{" "}
-            <span className='bg-primary px-2 ml-2 text-white rounded'>
+          <div className='my-2 flex items-center text-lg flex-wrap'>
+            <p className='mr-2'>
+              Isi form pemesanan tempat parkir untuk Spot :{" "}
+            </p>
+            <span className='bg-primary px-2 text-white rounded whitespace-nowrap'>
               {parkingSpot}
             </span>
           </div>
