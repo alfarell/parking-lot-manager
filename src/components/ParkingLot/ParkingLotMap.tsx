@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { Layer, Text } from "react-konva";
 import { useParkingLotContext } from "../../context/ParkingLotProvider";
 import ParkingLayoutFields from "./ParkingLayoutFields";
-import TransactionForm from "../TransactionForm/TransactionForm";
+import { useTransactionFormContext } from "../../context/TransactionFormProvider";
 
 const totalSpot: number = 10;
 const spotWidth: number = 100;
@@ -11,18 +10,10 @@ const totalSpotWidth: number = totalSpot * spotWidth;
 
 const ParkingLotMap = () => {
   const { activeSessions } = useParkingLotContext();
-
-  const [parkingSpots, setParkingSpots] = useState<string>("");
-  const [openModalForm, setOpenModalForm] = useState<boolean>(false);
+  const { handleOpenModalForm } = useTransactionFormContext();
 
   const handleSpotClick = (id: string) => {
-    setParkingSpots(id);
-    setOpenModalForm(true);
-  };
-
-  const handleCloseModalForm = () => {
-    setParkingSpots("");
-    setOpenModalForm(false);
+    handleOpenModalForm(id);
   };
 
   return (
@@ -78,13 +69,6 @@ const ParkingLotMap = () => {
           onSelect={handleSpotClick}
         />
       </Layer>
-
-      {openModalForm && (
-        <TransactionForm
-          parkingSpot={parkingSpots}
-          onClose={handleCloseModalForm}
-        />
-      )}
     </>
   );
 };

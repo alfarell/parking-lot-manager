@@ -1,13 +1,11 @@
 import { FormEventHandler, useState } from "react";
 import "./TransactionForm.css";
 import { useParkingLotContext } from "../../context/ParkingLotProvider";
+import { useTransactionFormContext } from "../../context/TransactionFormProvider";
 import { ParkingTransaction } from "../../types";
 import Modal from "../Modal/Modal";
 
-interface TransactionFormProps {
-  parkingSpot: string;
-  onClose: Function;
-}
+interface TransactionFormProps {}
 
 const durationMultiplier: Record<string, number> = {
   minutes: 60000,
@@ -15,11 +13,11 @@ const durationMultiplier: Record<string, number> = {
   days: 86400000,
 };
 
-const TransactionForm: React.FC<TransactionFormProps> = ({
-  parkingSpot,
-  onClose,
-}) => {
+const TransactionForm: React.FC<TransactionFormProps> = () => {
+  const { isModalOpen, selectedParkingSpot, handleCloseModalForm } =
+    useTransactionFormContext();
   const { handleAddNewTransaction } = useParkingLotContext();
+
   const [success, setSuccess] = useState<boolean>(false);
   const [error, setError] = useState<{ message: string }>({ message: "" });
 
@@ -51,11 +49,12 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
       Number(durationInput.value) * durationMultiplier[durationType.value];
     const generateId =
       Date.now().toString(36) + Math.random().toString(36).substring(2);
+
     const data: ParkingTransaction = {
       id: generateId,
       name: nameInput.value,
       licence: licenceInput.value,
-      parkingSpot,
+      parkingSpot: selectedParkingSpot,
       duration: Number(durationInput.value),
       durationMs: durationInMs,
       durationType: durationType.value,
@@ -67,9 +66,13 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   };
 
   const handleCloseModal = () => {
-    onClose();
+    handleCloseModalForm();
     setSuccess(false);
   };
+
+  if (!isModalOpen) {
+    return null;
+  }
 
   return (
     <Modal
@@ -91,7 +94,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
               Isi form pemesanan tempat parkir untuk Spot :{" "}
             </p>
             <span className='bg-primary px-2 text-white rounded whitespace-nowrap'>
-              {parkingSpot}
+              {selectedParkingSpot}
             </span>
           </div>
           <form className='flex flex-col' onSubmit={handleSubmit}>
@@ -149,7 +152,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
             <button
               type='button'
               className='button-form-close'
-              onClick={() => onClose()}
+              onClick={() => handleCloseModal()}
             >
               Batal
             </button>

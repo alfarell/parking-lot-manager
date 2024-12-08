@@ -18,7 +18,7 @@ interface CreateParkingLayoutProps {
   emptyColor?: string;
   keyItemPrefix: string;
   dataFills: ParkingTransaction[];
-  onSelect: Function;
+  onSelect: (id: string) => string | void;
 }
 interface TouchPositionState {
   x: number;
