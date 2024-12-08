@@ -34,6 +34,33 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
   onSelect,
 }) => {
   const [carIcon] = useImage(CarIcon);
+
+  const [touchStartPosition, setTouchStartPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const threshold = 2;
+
+  const handleTouchStart = (e: any) => {
+    const touch = e.evt.touches[0];
+    setTouchStartPosition({ x: touch.clientX, y: touch.clientY });
+    setIsDragging(false);
+  };
+
+  const handleTouchMove = (e: any) => {
+    const touch = e.evt.touches[0];
+    const dx = touch.clientX - touchStartPosition.x;
+    const dy = touch.clientY - touchStartPosition.y;
+
+    if (Math.abs(dx) > threshold || Math.abs(dy) > threshold) {
+      setIsDragging(true);
+    }
+  };
+
+  const handleTouchEnd = (e: any, spotKey: string) => {
+    if (!isDragging) {
+      onSelect(spotKey);
+    }
+  };
+
   const defineX = () => {
     if (rotateCenter) {
       const totalWidth = total * itemWidth + x;
@@ -88,6 +115,9 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
               stroke='black'
               strokeWidth={2}
               onClick={(e) => handleClickSpot(e, spotKey)}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={(e) => handleTouchEnd(e, spotKey)}
             />
             {isFilledSpot && (
               <Image
