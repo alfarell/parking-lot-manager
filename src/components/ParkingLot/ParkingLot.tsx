@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Stage } from "react-konva";
 import Konva from "konva";
 import ParkingLotRoadDirectin from "./ParkingLotRoadDirectin";
@@ -84,8 +84,11 @@ const ParkingLot: React.FC<ParkingLotProps> = () => {
     setScale(scaler);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     updateOrientation();
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("resize", updateOrientation);
 
     return () => {
