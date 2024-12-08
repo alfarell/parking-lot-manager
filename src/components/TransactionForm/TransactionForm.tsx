@@ -20,7 +20,8 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   onClose,
 }) => {
   const { handleAddNewTransaction } = useParkingLotContext();
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<{ message: string }>({ message: "" });
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -35,6 +36,16 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
     const durationType = formElements.namedItem(
       "duration-type"
     ) as HTMLInputElement;
+
+    const nameValue = nameInput.value;
+    const licenceValue = licenceInput.value;
+    const durationValue = durationInput.value;
+
+    if (!nameValue) return setError({ message: "Nama harus diisi" });
+    if (!licenceValue) return setError({ message: "Plat nomor harus diisi" });
+    if (!durationValue) return setError({ message: "Durasi harus diisi" });
+
+    setError({ message: "" });
 
     const durationInMs =
       Number(durationInput.value) * durationMultiplier[durationType.value];
@@ -129,6 +140,9 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
                 <option value='days'>Hari</option>
               </select>
             </div>
+            {error?.message && (
+              <span className='text-red-600'>{error?.message}</span>
+            )}
             <button type='submit' className='button-form-submit'>
               Buat pesanan
             </button>
