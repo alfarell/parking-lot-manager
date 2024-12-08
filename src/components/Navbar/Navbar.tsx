@@ -34,7 +34,9 @@ const Navbar = () => {
     <nav className='base-navbar'>
       <div className='navbar-fixed-wrapper'>
         <div className='navbar-container'>
-          <span className='navbar-title'>Parkirin</span>
+          <NavLink to='/'>
+            <span className='navbar-title'>Parkirin</span>
+          </NavLink>
           <div
             className='navbar-menu-button'
             onClick={() => setShowMenu((prevState) => !prevState)}
