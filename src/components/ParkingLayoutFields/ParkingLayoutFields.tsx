@@ -3,6 +3,8 @@ import useImage from "use-image";
 import { ParkingTransaction } from "../../types";
 
 import CarIcon from "../../assets/car-svgrepo-com.svg";
+import { KonvaEventObject } from "konva/lib/Node";
+import { useState } from "react";
 
 interface CreateParkingLayoutProps {
   total: number;
@@ -50,6 +52,17 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
     return y;
   };
 
+  const handleClickSpot = (
+    e: KonvaEventObject<MouseEvent>,
+    spotKey: string
+  ) => {
+    if (e.evt.button !== 0) {
+      e.evt.preventDefault();
+      return;
+    }
+    onSelect(spotKey);
+  };
+
   return (
     <Group x={defineX()} y={defineY()} rotation={rotateCenter}>
       {[...new Array(total)].map((_, index) => {
@@ -74,8 +87,7 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
               fill={isFilledSpot ? filledColor : emptyColor}
               stroke='black'
               strokeWidth={2}
-              onClick={() => onSelect(spotKey)}
-              onTouchEnd={() => onSelect(spotKey)}
+              onClick={(e) => handleClickSpot(e, spotKey)}
             />
             {isFilledSpot && (
               <Image
