@@ -65,7 +65,7 @@ const TransactionListPage = () => {
           )}
         </table>
         {!transactions?.length && (
-          <div className='table-nodata'>Tidak ada sesi aktif</div>
+          <div className='table-nodata'>Tidak ada daftar transaksi</div>
         )}
       </div>
     </div>
