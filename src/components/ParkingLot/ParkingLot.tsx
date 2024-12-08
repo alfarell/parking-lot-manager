@@ -76,7 +76,7 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
           <Text text='Denah Parkir' x={20} y={0} fontSize={24} fill='black' />
           <ParkingLayoutFields
             total={10}
-            x={400}
+            x={0}
             y={50}
             itemWidth={spotWidth}
             itemHeight={spotHeight}
@@ -86,8 +86,9 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
           />
           <ParkingLayoutFields
             total={10}
-            x={400}
+            x={0}
             y={400}
+            rotateCenter={180}
             itemWidth={spotWidth}
             itemHeight={spotHeight}
             dataFills={activeSessions}
@@ -96,7 +97,7 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
           />
           <ParkingLayoutFields
             total={10}
-            x={400}
+            x={0}
             y={600}
             itemWidth={spotWidth}
             itemHeight={spotHeight}
@@ -106,8 +107,9 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
           />
           <ParkingLayoutFields
             total={10}
-            x={400}
+            x={0}
             y={950}
+            rotateCenter={180}
             itemWidth={spotWidth}
             itemHeight={spotHeight}
             dataFills={activeSessions}

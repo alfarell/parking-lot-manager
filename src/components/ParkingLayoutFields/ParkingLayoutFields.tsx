@@ -5,6 +5,7 @@ interface CreateParkingLayoutProps {
   total: number;
   x?: number;
   y?: number;
+  rotateCenter?: number;
   itemWidth: number;
   itemHeight: number;
   filledColor?: string;
@@ -18,6 +19,7 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
   total,
   x = 0,
   y = 0,
+  rotateCenter,
   itemWidth,
   itemHeight,
   filledColor = "red",
@@ -26,12 +28,30 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
   dataFills,
   onSelect,
 }) => {
+  const defineX = () => {
+    if (rotateCenter) {
+      const totalWidth = total * itemWidth + x;
+      return totalWidth;
+    }
+
+    return x;
+  };
+
+  const defineY = () => {
+    if (rotateCenter) {
+      const totalHeight = itemHeight + y;
+      return totalHeight;
+    }
+
+    return y;
+  };
+
   return (
-    <>
+    <Group x={defineX()} y={defineY()} rotation={rotateCenter}>
       {[...new Array(total)].map((_, index) => {
         const itemNumber: number = index + 1;
-        const itemXPoint: number = index * itemWidth + x;
-        const itemYPoint: number = y;
+        const itemXPoint: number = index * itemWidth;
+        const itemYPoint: number = 0;
         const width: number = itemWidth;
         const height: number = itemHeight;
         const spotKey: string = `${keyItemPrefix}${itemNumber}`;
@@ -62,7 +82,7 @@ const ParkingLayoutFields: React.FC<CreateParkingLayoutProps> = ({
           </Group>
         );
       })}
-    </>
+    </Group>
   );
 };
 
