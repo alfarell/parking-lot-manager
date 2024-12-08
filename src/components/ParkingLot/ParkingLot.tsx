@@ -58,7 +58,23 @@ const ParkingLot: React.FC<ParkingLotProps> = () => {
   };
 
   const handleDragMove = (e: Konva.KonvaEventObject<DragEvent>) => {
-    const newPos = { x: e.target.x(), y: e.target.y() };
+    let x = e.target.x();
+    let y = e.target.y();
+
+    const minWidth = -(window.innerWidth / 4) * scale;
+    const minHeight = -(window.innerWidth / 4) * scale;
+    const maxWidth = window.innerWidth - 400 * scale;
+    const maxHeight = window.innerHeight - 600 * scale;
+
+    if (x <= minWidth) x = minWidth;
+    if (y <= minHeight) y = minHeight;
+    if (x >= maxWidth) x = maxWidth;
+    if (y >= maxHeight) y = maxHeight;
+
+    e.target.x(x);
+    e.target.y(y);
+
+    const newPos = { x, y };
     setPosition(newPos);
   };
 
