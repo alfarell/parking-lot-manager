@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Stage, Layer, Text } from "react-konva";
+import { Stage, Layer, Text, Arrow } from "react-konva";
 import Konva from "konva";
 import ParkingLayoutFields from "../ParkingLayoutFields/ParkingLayoutFields";
 import { useParkingLotContext } from "../../context/ParkingLotProvider";
@@ -113,7 +113,6 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
         height={window.innerHeight}
         draggable
         onDragMove={handleDragMove}
-        drag
         scaleX={scale}
         scaleY={scale}
         x={position.x}
@@ -171,6 +170,64 @@ const ParkingLot: React.FC<ParkingLotProps> = ({ onItemSelect }) => {
             keyItemPrefix='D-'
             onSelect={handleSpotClick}
           />
+        </Layer>
+        <Layer>
+          <Text x={-130} y={10} text='Masuk' fontSize={20} fill='black' />
+          <Arrow
+            x={0}
+            y={50}
+            rotation={90}
+            points={[0, 100, 150, 100]}
+            pointerLength={15}
+            pointerWidth={20}
+            fill='black'
+            stroke='black'
+            strokeWidth={10}
+          />
+          <Arrow
+            x={totalSpotWidth / 2 - 100}
+            y={200}
+            points={[0, 100, 200, 100]}
+            pointerLength={15}
+            pointerWidth={20}
+            fill='black'
+            stroke='black'
+            strokeWidth={10}
+          />
+          <Arrow
+            x={totalSpotWidth + 200}
+            y={480}
+            rotation={90}
+            points={[0, 100, 200, 100]}
+            pointerLength={15}
+            pointerWidth={20}
+            fill='black'
+            stroke='black'
+            strokeWidth={10}
+          />
+          <Arrow
+            x={totalSpotWidth / 2 + 100}
+            y={950}
+            rotation={180}
+            points={[0, 100, 200, 100]}
+            pointerLength={15}
+            pointerWidth={20}
+            fill='black'
+            stroke='black'
+            strokeWidth={10}
+          />
+          <Arrow
+            x={0}
+            y={950}
+            rotation={90}
+            points={[0, 100, 150, 100]}
+            pointerLength={15}
+            pointerWidth={20}
+            fill='black'
+            stroke='black'
+            strokeWidth={10}
+          />
+          <Text x={-130} y={1130} text='Keluar' fontSize={20} fill='black' />
         </Layer>
       </Stage>
     </div>
