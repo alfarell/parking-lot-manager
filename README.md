@@ -2,6 +2,11 @@
 
 Parking lot manager app with features to see available spot in the parking lot area, make a parking reservation, monitor the parking space used, display the parking receipt.
 
+Parking lot map features:
+
+- zoom-in/out
+- swipe in 2 axis
+
 ## Technology used
 
 Framework: React JS (Typescript)
