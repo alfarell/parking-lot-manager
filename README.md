@@ -36,4 +36,5 @@ and then setup the `PORT=port-number-here`. And then restart the project develop
 ## Important Scripts
 
 `npm run build`: Builds the application for production.
+
 `npm run start`: Starts the development server on localhost.
